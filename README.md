@@ -7,26 +7,23 @@ This is a system for Automatic Music Transcription (AMT) that converts piano aud
 This was made for my final project during my Masters in Applied AI and UX. This project takes a piano audio recording (.wav) and outputs a .mid (MIDI) file with predicted note onsets, offsets, pitches, and velocities. There are two models that have been trained and evaluated. I'm making this as step-by-step as possible, because it's what I would have wanted when I started making this :,)
 
 The pipeline is:
-```bash
-Audio (.wav)
-    |
-    v
-Log-Mel Spectrogram
-(128 mels, 16 kHz, 10ms hop)
-    |
-    v
-Conformer Encoder
-    |
-    v
-Multi-Head Output
-(onset / frame / offset / velocity [/ pedals])
-    |
-    v
-Note Decoding
-    |
-    v
-MIDI Output (.mid)
-````
+```mermaid
+flowchart TD
+  audio["Audio (.wav)"]
+  spect["`Log-Mel Spectrogram
+  (128 mels, 16 kHz,
+  10ms hop)`"]
+  audio --> spect
+  conf[Conformer Encoder]
+  spect --> conf
+  multi["`Multi-Head Output
+  (onset / frame / offset / velocity [/ pedals])`"]
+  conf --> multi
+  decoder[Note Decoding]
+  multi --> decoder
+  midi["MIDI Output (.mid)"]
+  decoder -->midi
+```
 ## Models
 ### Model A - Base Conformer
 A 6-layer Conformer encoder (384-dim, 6 heads) that predicts note onsets, frames, offsets, and velocity from log-mel spectrograms. Frame predictions are conditioned on onset outputs via a learned projection, using teacher forcing during training.
