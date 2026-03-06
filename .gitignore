@@ -6,7 +6,7 @@ __pycache__/
 venv/
 .venv/
 
-# Large data files - too big for GitHub
+# Large data files 
 data/
 preprocessed/
 checkpoints*/
@@ -16,7 +16,7 @@ checkpoints*/
 *.ckpt
 *.h5
 
-# NumPy/NPZ files (your preprocessed features)
+# NumPy/NPZ files (preprocessed extraction features)
 *.npz
 
 # Jupyter
